@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PUBLIC_URL = exports.JWT_SECRET = exports.NODE_ENV = exports.DB_USER = exports.DB_TEST_NAME = exports.DB_DEV_NAME = exports.DB_PASSWORD = exports.DB_HOST = exports.DB_PORT = exports.PORT = void 0;
-var dotenv_1 = require("dotenv");
+const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 exports.PORT = process.env.PORT || 3001;
 exports.DB_PORT = process.env.DB_PORT || 3306;
