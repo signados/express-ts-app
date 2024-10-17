@@ -2,7 +2,7 @@ import db from "../database/db";
 import { DataTypes } from "sequelize";
 
 
-export const UserModel = db.define('users', {
+export const UserModel = db.define('user', {
 
     id: {
         type: DataTypes.INTEGER,
@@ -11,12 +11,7 @@ export const UserModel = db.define('users', {
       },
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notNull: {
-                msg: 'el campo name no puede estar vacío'
-            },
-        }
+        allowNull: true
     },
     email: {
         type: DataTypes.STRING,
@@ -37,17 +32,16 @@ export const UserModel = db.define('users', {
 
         }
     },
-    role: {
-        type: DataTypes.STRING,
-        defaultValue : 'user',
+    roles: {
+        type: DataTypes.JSON,  // Cambia el tipo a JSON para que soporte estructuras JSON
+        defaultValue: ['user'],  // Valor por defecto, un array con 'user'
+        allowNull: false,  // Opcional, para asegurar que no haya valores nulos
     },
-    
-
 }, {
     timestamps: false
 });
 (async () => {
-    await db.sync();
+    await db.sync({ alter: true });
     // console.log("All models were synchronized successfully.");
 })();
 

@@ -34,12 +34,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = exports.tokenSign = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
+const fs = __importStar(require("fs"));
+// import { JWT_SECRET } from './config'
 const config_1 = require("./config");
+const PRIVATE_KEY = fs.readFileSync('./utils/jwt/private.pem', 'utf8');
+const PUBLIC_KEY = fs.readFileSync('./utils/jwt/public.pem', 'utf8');
 const tokenSign = (user) => __awaiter(void 0, void 0, void 0, function* () {
     const sign = jwt.sign({
         id: user.id,
         role: user.role
-    }, config_1.JWT_SECRET, {
+    }, 
+    //JWT_SECRET,
+    { key: PRIVATE_KEY, passphrase: config_1.PRIVATE_KEY_SECRET }, {
+        algorithm: "RS256", // Para clave privada y pública
         expiresIn: "2h",
     });
     return sign;
@@ -47,7 +54,8 @@ const tokenSign = (user) => __awaiter(void 0, void 0, void 0, function* () {
 exports.tokenSign = tokenSign;
 const verifyToken = (tokenJwt) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        return jwt.verify(tokenJwt, config_1.JWT_SECRET);
+        return jwt.verify(tokenJwt, PUBLIC_KEY, { algorithms: ["RS256"] }); // Usamos la clave pública para verificar
+        // return jwt.verify(tokenJwt, JWT_SECRET)
     }
     catch (error) {
         return null;

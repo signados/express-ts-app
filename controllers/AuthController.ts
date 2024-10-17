@@ -13,7 +13,12 @@ export const registerController =  async(req:Request, res:Response): Promise<Res
         const data = req.body
         const newPassword = data.password
         const passwordHash = await encrypt(newPassword)
-        const newUser : newUser = {...data, password: passwordHash}
+        const roles = data.roles ? data.roles : ['user'];
+        const newUser : newUser = {
+            ...data, 
+            password: passwordHash,
+            roles: roles
+        }
         console.log(newUser) 
         const user: Model<UserAttributes> = await userModel.create(newUser)
         
@@ -21,16 +26,12 @@ export const registerController =  async(req:Request, res:Response): Promise<Res
             id: user?.get('id') as number,
             name: user?.get('name') as string,
             email: user?.get('email') as string,
-            role:user?.get('role') as string,
+            role:user?.get('roles') as string,
          }
-    
-        ///💥ATENCION HE DEJADO AQUÍ UN MALDITO ANY PERO ESTO ME SUPERAAAA AAAAAHHHHH!!!!
-        //TE ODIOOOOOOOOO
-        //  dataUser.set('password', undefined, { strict:false})
-            const sesiondata : SesionData = {
+        const sesiondata : SesionData = {
                token: await tokenSign(user),
                user:userData
-            }
+        }
     
         res.status(201).send({sesiondata})
             
@@ -54,7 +55,7 @@ export const registerController =  async(req:Request, res:Response): Promise<Res
             id: user?.get('id') as number,
             name: user?.get('name') as string,
             email: user?.get('email') as string,
-            role:user?.get('role') as string,
+            role:user?.get('roles') as string,
          }
         const hashPassword = user?.get('password') as string
         const check = await compare(loginPassword, hashPassword)

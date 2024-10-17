@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModel = void 0;
 const db_1 = __importDefault(require("../database/db"));
 const sequelize_1 = require("sequelize");
-exports.UserModel = db_1.default.define('users', {
+exports.UserModel = db_1.default.define('user', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
@@ -23,12 +23,7 @@ exports.UserModel = db_1.default.define('users', {
     },
     name: {
         type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            notNull: {
-                msg: 'el campo name no puede estar vacío'
-            },
-        }
+        allowNull: true
     },
     email: {
         type: sequelize_1.DataTypes.STRING,
@@ -48,15 +43,16 @@ exports.UserModel = db_1.default.define('users', {
             },
         }
     },
-    role: {
-        type: sequelize_1.DataTypes.STRING,
-        defaultValue: 'user',
+    roles: {
+        type: sequelize_1.DataTypes.JSON, // Cambia el tipo a JSON para que soporte estructuras JSON
+        defaultValue: ['user'], // Valor por defecto, un array con 'user'
+        allowNull: false, // Opcional, para asegurar que no haya valores nulos
     },
 }, {
     timestamps: false
 });
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    yield db_1.default.sync();
+    yield db_1.default.sync({ alter: true });
     // console.log("All models were synchronized successfully.");
 }))();
 exports.default = exports.UserModel;

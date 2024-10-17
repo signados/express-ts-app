@@ -22,18 +22,16 @@ const registerController = (req, res) => __awaiter(void 0, void 0, void 0, funct
         const data = req.body;
         const newPassword = data.password;
         const passwordHash = yield (0, handlePassword_1.encrypt)(newPassword);
-        const newUser = Object.assign(Object.assign({}, data), { password: passwordHash });
+        const roles = data.roles ? data.roles : ['user'];
+        const newUser = Object.assign(Object.assign({}, data), { password: passwordHash, roles: roles });
         console.log(newUser);
         const user = yield UserModel_1.default.create(newUser);
         const userData = {
             id: user === null || user === void 0 ? void 0 : user.get('id'),
             name: user === null || user === void 0 ? void 0 : user.get('name'),
             email: user === null || user === void 0 ? void 0 : user.get('email'),
-            role: user === null || user === void 0 ? void 0 : user.get('role'),
+            role: user === null || user === void 0 ? void 0 : user.get('roles'),
         };
-        ///💥ATENCION HE DEJADO AQUÍ UN MALDITO ANY PERO ESTO ME SUPERAAAA AAAAAHHHHH!!!!
-        //TE ODIOOOOOOOOO
-        //  dataUser.set('password', undefined, { strict:false})
         const sesiondata = {
             token: yield (0, handlejwt_1.tokenSign)(user),
             user: userData
@@ -60,7 +58,7 @@ const loginController = (req, res) => __awaiter(void 0, void 0, void 0, function
             id: user === null || user === void 0 ? void 0 : user.get('id'),
             name: user === null || user === void 0 ? void 0 : user.get('name'),
             email: user === null || user === void 0 ? void 0 : user.get('email'),
-            role: user === null || user === void 0 ? void 0 : user.get('role'),
+            role: user === null || user === void 0 ? void 0 : user.get('roles'),
         };
         const hashPassword = user === null || user === void 0 ? void 0 : user.get('password');
         const check = yield (0, handlePassword_1.compare)(loginPassword, hashPassword);

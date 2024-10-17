@@ -7,7 +7,7 @@ const db = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 	dialect: 'mysql',
 	port: DB_PORT,  // '8889' for mac, '3306' for windows
 	define: {
-		timestamps: false
+		timestamps: false,
 	}
 })
 

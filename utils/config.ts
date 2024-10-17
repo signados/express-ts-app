@@ -11,4 +11,5 @@ export const DB_TEST_NAME = <string>process.env.DB_TEST_NAME
 export const DB_USER = <string>process.env.DB_USER
 export const NODE_ENV : any= process.env.NODE_ENV
 export const JWT_SECRET = <string>process.env.JWT_SECRET
+export const PRIVATE_KEY_SECRET = <string>process.env.PRIVATE_KEY_SECRET
 export const PUBLIC_URL= <string> process.env.PUBLIC_URL
