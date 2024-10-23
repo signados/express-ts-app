@@ -2,7 +2,12 @@
 
 npm install
 
+npm run build (Si hay cambios)
 npm run start
+
+# Register y Login se usuarios con criptografía asimétrica
+
+Cargas claves pública y privada y contraseña
 
 ## Test
 
