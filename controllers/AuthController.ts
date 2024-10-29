@@ -29,7 +29,7 @@ export const registerController =  async(req:Request, res:Response): Promise<Res
             role:user?.get('roles') as string,
          }
         const sesiondata : SesionData = {
-               token: await tokenSign(user),
+               token: await tokenSign(userData),
                user:userData
         }
     

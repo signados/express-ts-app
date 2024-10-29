@@ -12,6 +12,8 @@ export const tokenSign = async (user: any) => {
     const sign = jwt.sign(
         {
             id: user.id,
+            username: user.name,
+            email: user.email,
             role: user.role
         },
         //JWT_SECRET,
