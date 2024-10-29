@@ -28,6 +28,7 @@ services:
       server:
             build:
                   context: .
+            image: signados/jsexpresslogin:$(tag) 
             environment:
                   NODE_ENV: production
                   DB_HOST: mysql # Se conecta al servicio mysql
