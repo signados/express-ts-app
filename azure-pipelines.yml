@@ -21,6 +21,9 @@ stages:
     pool:
       vmImage: ubuntu-latest
     steps:
+    # Paso 1: Crear el archivo .env con la variable TAG
+    - script: echo "TAG=$(tag)" > .env
+      displayName: 'Set TAG environment variable for Docker Compose'
     - task: DockerCompose@0
       displayName: 'Build Docker Compose for server'
       inputs:
@@ -38,6 +41,6 @@ stages:
         command: 'push'
         repository: $(imageName)  # Nombre de la imagen en Docker Hub
         tags: |
-          latest  # Especifica las etiquetas, puedes usar $(Build.BuildId) para versiones únicas
+          $(tag)  # Usa el mismo `$(tag)` para la versión única
         containerRegistry: 'dockerhub-service-connection'  
 
