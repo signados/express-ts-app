@@ -1,0 +1,39 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+  imageName: 'signados/js-express-login' 
+
+stages:
+- stage: Build
+  displayName: Build image and push Docker image
+  jobs:
+  - job: Build
+    displayName: Build and push Docker image
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Docker@2
+      displayName: Build Docker image
+      inputs:
+        command: build
+        dockerfile: 'js-express-login'
+        tags: |
+          $(imageName):$(tag)
+    - task: Docker@2
+      displayName: Push Docker image to Docker Hub
+      inputs:
+        command: push
+        repository: $(imageName)
+        tags: |
+          $(tag)
+        containerRegistry: 'dockerhub-service-connection'  
+
