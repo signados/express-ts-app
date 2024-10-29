@@ -25,7 +25,7 @@ stages:
       displayName: 'Build Docker Compose for server'
       inputs:
         action: 'Run a Docker Compose command'
-        dockerComposeFile: '**/docker-compose.yml'  # Ruta al docker-compose.yml
+        dockerComposeFile: '**/compose.yml'  # Ruta al docker-compose.yml
         commandOptions: '--build server'  # Construir solo el servicio `server`
 
     # Paso 3: Subir la imagen construida a Docker Hub
