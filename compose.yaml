@@ -1,3 +1,5 @@
+version: "3.8"  
+
 # Comments are provided throughout this file to help you get started.
 # If you need more help, visit the Docker Compose reference guide at
 # https://docs.docker.com/go/compose-spec-reference/
@@ -28,7 +30,6 @@ services:
       server:
             build:
                   context: .
-            image: signados/jsexpresslogin:$(tag) 
             environment:
                   NODE_ENV: production
                   DB_HOST: mysql # Se conecta al servicio mysql
