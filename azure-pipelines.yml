@@ -10,7 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  imageName: 'signados/js-express-login' 
+  imageName: 'signados/jsexpresslogin' 
 
 stages:
 - stage: Build
