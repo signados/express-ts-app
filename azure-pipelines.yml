@@ -39,7 +39,7 @@ stages:
       displayName: 'Push Docker image to Docker Hub'
       inputs:
         command: 'push'
-        repository: $(imageName)  # Nombre de la imagen en Docker Hub
+        repository: 'signados/jsexpresslogin'  # Nombre de la imagen en Docker Hub
         tags: |
           $(tag)  # Usa el mismo `$(tag)` para la versión única
         containerRegistry: 'dockerhub-service-connection'  
