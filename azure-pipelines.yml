@@ -28,7 +28,8 @@ stages:
         dockerComposeFile: '**/compose.yaml'  # Ruta al docker-compose.yml
         projectName: 'jsexpresslogin'
         dockerComposeCommand: 'build' 
-        commandOptions: '--build server'  # Construir solo el servicio `server`
+        additionalImageTags: |
+          $(imageName):$(tag)  # Etiqueta la imagen con el nombre y la versión únicos
 
     # Paso 3: Subir la imagen construida a Docker Hub
     - task: Docker@2
